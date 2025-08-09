@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/auth.js";
-import User from "./models/User.js";
+import User from "./models/user.js";
 import Room from "./models/Room.js";
 
 dotenv.config();
