@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code_AI</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="editor-container">
+        <h2>Code<span style="color: rgb(250, 0, 0)">AI..</span></h2>
+        <div id="editor" style="width: 90%; height: 90%"></div>
+      </div>
+      <div id="output-container">
+        <div id="controls">
+          <div class="opt">
+            <select id="language-select">
+              <option value="">Language</option>
+              <option value="javascript">JavaScript</option>
+              <option value="java">Java</option>
+              <option value="python">Python</option>
+              <option value="c++">C++</option>
+            </select>
+          </div>
+          <div class="opt"><button id="convert-btn">Convert</button></div>
+          <div class="opt"><button id="debug-btn">Debug</button></div>
+          <div class="opt"><button id="quality-btn">Complexity</button></div>
+          
+          </div>
+
+        <h2 style="margin-top: 15px">Output:</h2>
+        <div id="output-loader" class="loader"></div>
+        <pre id="output">
+        </pre>
+
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.27.0/min/vs/loader.js"></script>
+  <script src="app.js"></script>
+</html>
