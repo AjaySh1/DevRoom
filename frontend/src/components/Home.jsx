@@ -20,7 +20,7 @@ const Home = () => {
   }, [email]);
 
   const joinRoomInDB = async (room) => {
-    await fetch("http://localhost:5000/api/rooms/join", {
+    await fetch(`${backendUrl}/api/rooms/join`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, roomId: room }),
