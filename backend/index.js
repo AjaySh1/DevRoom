@@ -213,7 +213,7 @@ app.post("/api/rooms/create", async (req, res) => {
 const port = process.env.PORT || 5000;
 
 
-// server.listen(port, () => {
-//   console.log(`server is working on port ${port}`);
-// });
-module.exports = app;
+server.listen(port, () => {
+  console.log(`server is working on port ${port}`);
+});
+// module.exports = app;
