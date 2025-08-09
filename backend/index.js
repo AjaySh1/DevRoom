@@ -30,7 +30,9 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "https://dev-room-8sa2.vercel.app", 
+    methods: ["GET", "POST"],
+    credentials: true
   },
 });
 
