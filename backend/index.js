@@ -12,13 +12,17 @@ import Room from "./models/Room.js";
 
 dotenv.config();
 
-const FRONTEND_URL = "https://dev-room-8sa2.vercel.app"; // <-- your deployed frontend URL
+const FRONTEND_URL = "https://dev-room-8sa2.vercel.app/"; // <-- your deployed frontend URL
 
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: FRONTEND_URL,
-  credentials: true
+  origin: [
+    FRONTEND_URL,
+    'http://localhost:5173'
+  ],
+  credentials: true,
+  exposedHeaders: ['Authorization']
 }));
 
 mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/codeeditor", {
