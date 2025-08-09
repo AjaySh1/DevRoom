@@ -180,6 +180,10 @@ app.post("/api/rooms/join", async (req, res) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Backend is running!' });
+});
+
 // API to check if room exists (for CreateRoom)
 app.get("/api/rooms/check", async (req, res) => {
   const { roomId } = req.query;
@@ -207,14 +211,9 @@ app.post("/api/rooms/create", async (req, res) => {
 });
 
 const port = process.env.PORT || 5000;
-const __dirname = path.resolve();
 
-// Static file serving is commented out for dev
-// app.use(express.static(path.join(__dirname, "../frontend/dist")));
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+
+// server.listen(port, () => {
+//   console.log(`server is working on port ${port}`);
 // });
-
-server.listen(port, () => {
-  console.log(`server is working on port ${port}`);
-});
+module.exports = app;
