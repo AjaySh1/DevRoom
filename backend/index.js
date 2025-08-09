@@ -12,10 +12,12 @@ import Room from "./models/Room.js";
 
 dotenv.config();
 
+const FRONTEND_URL = "https://dev-room-8sa2.vercel.app"; // <-- your deployed frontend URL
+
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: FRONTEND_URL,
   credentials: true
 }));
 
@@ -30,7 +32,9 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: FRONTEND_URL,
+    methods: ["GET", "POST"],
+    credentials: true
   },
 });
 
@@ -212,8 +216,11 @@ app.post("/api/rooms/create", async (req, res) => {
 
 const port = process.env.PORT || 5000;
 
-
 server.listen(port, () => {
   console.log(`server is working on port ${port}`);
 });
-// module.exports = app;
+
+// server.listen(port, () => {
+//   console.log(`server is working on port ${port}`);
+// });
+module.exports = app;
