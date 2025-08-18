@@ -7,22 +7,19 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/auth.js";
-import User from "./models/user.js";
+import User from "./models/User.js";
 import Room from "./models/Room.js";
+import { GoogleGenerativeAI } from "@google/generative-ai"; // Gemini API
 
 dotenv.config();
 
-const FRONTEND_URL = "https://dev-room-8sa2.vercel.app"; // <-- your deployed frontend URL
-
+const FRONTEND_URL = "https://dev-room-8sa2.vercel.app";
+const LOCAL_URL = "http://localhost:5173";
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: [
-    FRONTEND_URL,
-    'http://localhost:5173'
-  ],
-  credentials: true,
-  exposedHeaders: ['Authorization']
+  origin: [FRONTEND_URL, LOCAL_URL],
+  credentials: true
 }));
 
 mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/codeeditor", {
@@ -32,11 +29,30 @@ mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/codeeditor"
 
 app.use("/api/auth", authRoutes);
 
+// Gemini DevAi setup
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+// DevAi chat route
+app.post("/api/devai-chat", async (req, res) => {
+  const { prompt } = req.body;
+  if (!prompt) return res.status(400).json({ error: "Prompt required" });
+  try {
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    res.json({ response: text.trim() });
+  } catch (error) {
+    console.error("DevAi error:", error);
+    res.status(500).json({ error: "DevAi failed to respond" });
+  }
+});
+
 const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: FRONTEND_URL,
+    origin: [FRONTEND_URL, LOCAL_URL],
     methods: ["GET", "POST"],
     credentials: true
   },
@@ -61,16 +77,16 @@ io.on("connection", (socket) => {
         activeUsers: [{ name: userName, socketId: socket.id }]
       });
     } else {
-      // Only add if not already present for this socket
-      const alreadyPresent = room.activeUsers.some(u => u.socketId === socket.id);
-      if (!alreadyPresent) {
-        await Room.findOneAndUpdate(
-          { roomId },
-          { $push: { activeUsers: { name: userName, socketId: socket.id } } },
-          { new: true }
-        );
-      }
-      // Refresh room after update
+      await Room.updateOne(
+        { roomId },
+        { $pull: { activeUsers: { email } } }
+      );
+
+      await Room.updateOne(
+        { roomId },
+        { $push: { activeUsers: { name: userName, email, socketId: socket.id } } }
+      );
+
       room = await Room.findOne({ roomId });
     }
 
@@ -223,4 +239,3 @@ const port = process.env.PORT || 5000;
 server.listen(port, () => {
   console.log(`server is working on port ${port}`);
 });
-
