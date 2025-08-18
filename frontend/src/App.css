@@ -465,3 +465,138 @@ body {
   width: 100%; /* or a fixed width like 300px */
   margin-top: 1rem;
 }
+/* DevAi panel styles */
+.devai-panel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background: #222;
+  color: #fff;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  transition: width 0.1s;
+}
+
+.devai-resizer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  background: #0078d4;
+  z-index: 20;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.devai-title {
+  padding: 1rem;
+  border-bottom: 1px solid #444;
+}
+
+.devai-chat-history {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  border-bottom: 1px solid #444;
+}
+
+.devai-user-msg {
+  display: block;
+  width: fit-content;
+  max-width: 80%;
+  margin-bottom: 1rem;
+  margin-right: auto;
+  background: #444;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+}
+
+.devai-ai-msg {
+  display: block;
+  width: fit-content;
+  max-width: 80%;
+  margin-bottom: 1rem;
+  margin-left: auto;
+  background: #0078d4;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+}
+.devai-code-block-wrapper {
+  position: relative;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+}
+.devai-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #0078d4;
+  color: #fff;
+  cursor: pointer;
+}
+.devai-copy-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  background: #a7d129;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  z-index: 2;
+}
+
+.devai-code-block {
+  background: #222;
+  color: #0f0;
+  padding: 2.2rem 1rem 1rem 1rem;
+  border-radius: 8px;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  margin: 0;
+  overflow-x: auto;
+  position: relative;
+}
+
+.devai-typing {
+  color: #aaa;
+  font-style: italic;
+}
+
+.devai-chat-input-row {
+  padding: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.devai-chat-input {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+.devai-send-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #0078d4;
+  color: #fff;
+  cursor: pointer;
+}
+
+.typing-indicator {
+  color: orange;
+  margin-left: 8px;
+}
